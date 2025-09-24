@@ -1,68 +1,76 @@
-from tictactoe import symbol, randomizer 
 import tkinter as tk
+from tictactoe import matrix, reset_matrix, replace, checkWinner, checkDraw, randomizer
 
+symbol = 'X'
+opposite = 'O'
+if randomizer == 1:
+    symbol, opposite = 'O', 'X'
 
 root = tk.Tk()
 root.title("Tic Tac Toe") 
 root.geometry("800x500")
 root.configure(bg="light gray")
 
-label = tk.Label(root, text="Tic Tac Toe", font=("Arial", 24), bg="light gray")
-label.pack(pady=15, padx=20)
+# Title
+label = tk.Label(root, text="Tic Tac Toe", font=("Arial", 20), bg="light gray")
+label.pack(pady=15)
 
-button1 = tk.Button(root, text="Start Game", font=("Arial", 18), width=10, height=2)
-button1.pack()
-button1.place(x=325, y=400)
-
-# row 1 
-button2 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button2.pack()
-button2.place(x=250, y=100)
-
-button3 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button3.pack()
-button3.place(x=345, y=100)
-
-button4 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button4.pack()
-button4.place(x=440, y=100)
-
-#row 2
-button5 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button5.pack()
-button5.place(x=250, y=195)
-
-button6 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button6.pack()
-button6.place(x=345, y=195)
-
-button7 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button7.pack()
-button7.place(x=440, y=195)
-
-#row 3 
-button8 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button8.pack()
-button8.place(x=250, y=290)
-
-button9 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
-button9.pack()  
-button9.place(x=345, y=290)
-
-button10 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit  
-button10.pack()
-button10.place(x=440, y=290)
-
-
-
+# Turn indicator
 turnLabel = tk.Label(root, text=f"{symbol}'s turn!", font=("Arial", 18), bg="light gray")
-turnLabel.pack()
-turnLabel.pack_forget()  # Hide initially
+turnLabel.pack(pady=5)
+
+# Board frame (where we use grid)
+board_frame = tk.Frame(root, bg="light gray")
+board_frame.pack(pady=20)
+
+buttons = []
+
+def button_click(x, y, btn):
+    global symbol, opposite
+    
+    if matrix[x][y] == '_':
+        replace(symbol, x, y)
+        btn.config(text=symbol, state="disabled")
+
+        if checkWinner(matrix, symbol):
+            turnLabel.config(text=f"{symbol} wins!")
+            disableAll()
+            return
+        elif checkDraw(matrix):
+            turnLabel.config(text="It's a tie!")
+            return
+        symbol, opposite = opposite, symbol
+        turnLabel.config(text=f"{symbol}'s turn!")
+
+def disableAll():
+    for row in buttons:
+        for b in row:
+            b.config(state="disabled")
+
+def reset_game():
+    global symbol, opposite 
+    reset_matrix()
+    for row in buttons:
+        for b in row:
+            b.config(text="_", state="normal")
+    if randomizer == 1:
+        symbol, opposite = 'O', 'X'
+    else:
+        symbol, opposite = 'X', 'O'
+    turnLabel.config(text=f"{symbol}'s turn!")
+
+resetButton = tk.Button(root, text="Reset Game", font=("Arial", 14), command=reset_game)
+resetButton.pack(pady=10)
+
+
+# Create 3x3 buttons in the board_frame using grid
+for i in range(3):
+    row = []
+    for j in range(3):
+        btn = tk.Button(board_frame, text="_", width=5, height=2, font=("Arial", 24),
+                        command=lambda x=i, y=j, b=None: button_click(x, y, buttons[x][y]))
+        btn.grid(row=i, column=j, padx=5, pady=5)
+        row.append(btn)
+    buttons.append(row)
 
 root.mainloop()
-
-
-
-
-if __name__ == "__main__":  
-    pass  # mainloop already called above

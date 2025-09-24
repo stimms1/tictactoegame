@@ -8,6 +8,15 @@ def replace(symbol, xIntercept, yIntercept):
     matrix[xIntercept][yIntercept] = symbol
     printMatrix()
 
+def reset_matrix():
+    """Reset the matrix to empty values."""
+    global matrix
+    matrix = [
+        ['_', '_', '_'],
+        ['_', '_', '_'],
+        ['_', '_', '_']
+    ]
+    return matrix
 
 def playTurn(symbol, oppositeSymbol):
     loop = True
@@ -36,46 +45,43 @@ def checkDraw(matrix):
 
 def randomizer():
     return random.randint(0,1)
-import random
 
 matrix = [
-    ['_', '_', '_'],
-    ['_', '_', '_'],
-    ['_', '_', '_']
-]
-randomizer = randomizer()
-isThereWinner = False
+        ['_', '_', '_'],
+        ['_', '_', '_'],
+        ['_', '_', '_']
+    ]
 
-printMatrix()
+if __name__ == "__main__":
+    import random
 
-symbol = 'X'
-opposite = 'O'
-if randomizer == 1:
-    print("O goes first!")
-    symbol = 'O'
-    opposite = 'X'
-else: 
-    print("X goes first!")
+    
+    randomizer = randomizer()
+    isThereWinner = False
 
-while checkWinner(matrix, symbol) == False and checkWinner(matrix, opposite) == False:
-    playTurn(symbol, opposite)
-    symbol, opposite = opposite, symbol
-    if checkWinner(matrix, symbol) == True:
-        print(f"{symbol} wins!")
-        break
-    elif checkWinner(matrix, opposite) == True:
-        print(f"{opposite} wins!")
-    else:
-        if checkDraw(matrix):
-            print("It's a tie!")
+    printMatrix()
+
+    symbol = 'X'
+    opposite = 'O'
+    if randomizer == 1:
+        print("O goes first!")
+        symbol = 'O'
+        opposite = 'X'
+    else: 
+        print("X goes first!")
+
+    while checkWinner(matrix, symbol) == False and checkWinner(matrix, opposite) == False:
+        playTurn(symbol, opposite)
+        symbol, opposite = opposite, symbol
+        if checkWinner(matrix, symbol) == True:
+            print(f"{symbol} wins!")
             break
-
-
-
-
-
-
-
+        elif checkWinner(matrix, opposite) == True:
+            print(f"{opposite} wins!")
+        else:
+            if checkDraw(matrix):
+                print("It's a tie!")
+                break
 
 
 
