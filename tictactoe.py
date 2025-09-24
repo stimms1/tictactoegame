@@ -3,6 +3,12 @@ def printMatrix():
     print(matrix[1])
     print(matrix[2])
 
+
+def replace(symbol, xIntercept, yIntercept):
+    matrix[xIntercept][yIntercept] = symbol
+    printMatrix()
+
+
 def playTurn(symbol, oppositeSymbol):
     loop = True
     while loop == True:
@@ -12,8 +18,7 @@ def playTurn(symbol, oppositeSymbol):
         if matrix[xIntercept][yIntercept] == symbol or matrix[xIntercept][yIntercept] == oppositeSymbol:
             print("Invalid input!")
         else: 
-            matrix[xIntercept][yIntercept] = symbol
-            printMatrix()
+            replace(symbol, xIntercept, yIntercept)
             loop = False
     
 def checkWinner(matrix, symbol):

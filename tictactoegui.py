@@ -1,4 +1,4 @@
-#import tictactoe
+from tictactoe import symbol, randomizer 
 import tkinter as tk
 
 
@@ -41,10 +41,28 @@ button7.pack()
 button7.place(x=440, y=195)
 
 #row 3 
+button8 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
+button8.pack()
+button8.place(x=250, y=290)
 
+button9 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit
+button9.pack()  
+button9.place(x=345, y=290)
+
+button10 = tk.Button(root, text="", font=("Arial", 18), width=5, height=2) #command=root.quit  
+button10.pack()
+button10.place(x=440, y=290)
+
+
+
+turnLabel = tk.Label(root, text=f"{symbol}'s turn!", font=("Arial", 18), bg="light gray")
+turnLabel.pack()
+turnLabel.pack_forget()  # Hide initially
 
 root.mainloop()
 
 
+
+
 if __name__ == "__main__":  
-    root.mainloop()
+    pass  # mainloop already called above
