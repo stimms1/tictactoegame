@@ -1,3 +1,8 @@
+def delete_buttons():
+    for row in buttons:
+        for btn in row:
+            btn.destroy()
+    buttons.clear()
 import tkinter as tk
 from tictactoe import matrix, reset_matrix, replace, checkWinner, checkDraw, randomizer, printMatrix
 
@@ -9,18 +14,18 @@ if randomizer == 1:
 root = tk.Tk()
 root.title("Tic Tac Toe") 
 root.geometry("800x500")
-root.configure(bg="light gray")
+root.configure(bg="pink")
 
 # Title
-label = tk.Label(root, text="Tic Tac Toe", font=("Arial", 20), bg="light gray")
+label = tk.Label(root, text="Tic Tac Toe", font=("Arial", 20), bg="pink")
 label.pack(pady=15)
 
 # Turn indicator
-turnLabel = tk.Label(root, text=f"{symbol}'s turn!", font=("Arial", 18), bg="light gray")
+turnLabel = tk.Label(root, text=f"{symbol}'s turn!", font=("Arial", 18), bg="pink")
 turnLabel.pack(pady=5)
 
 # Board frame (where we use grid)
-board_frame = tk.Frame(root, bg="light gray")
+board_frame = tk.Frame(root, bg="pink")
 board_frame.pack(pady=20)
 
 
@@ -66,6 +71,9 @@ def reset_game():
     global symbol, opposite 
     reset_matrix()
     printMatrix()
+    delete_buttons()
+    create_buttons()
+    set_button_commands()
     for row in buttons:
         for b in row:
             b.config(text="_", state="normal")
