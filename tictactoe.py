@@ -11,11 +11,10 @@ def replace(symbol, xIntercept, yIntercept):
 def reset_matrix():
     """Reset the matrix to empty values."""
     global matrix
-    matrix = [
-        ['_', '_', '_'],
-        ['_', '_', '_'],
-        ['_', '_', '_']
-    ]
+    # mutate existing matrix in-place so other modules holding a reference see the change
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            matrix[i][j] = '_'
     return matrix
 
 def playTurn(symbol, oppositeSymbol):
@@ -70,7 +69,7 @@ if __name__ == "__main__":
     else: 
         print("X goes first!")
 
-    while checkWinner(matrix, symbol) == False and checkWinner(matrix, opposite) == False:
+    ''' while checkWinner(matrix, symbol) == False and checkWinner(matrix, opposite) == False:
         playTurn(symbol, opposite)
         symbol, opposite = opposite, symbol
         if checkWinner(matrix, symbol) == True:
@@ -87,7 +86,7 @@ if __name__ == "__main__":
                 print("It's a tie!")
                 reset_matrix()
                 break
-
+'''
 
 
 
