@@ -75,12 +75,17 @@ if __name__ == "__main__":
         symbol, opposite = opposite, symbol
         if checkWinner(matrix, symbol) == True:
             print(f"{symbol} wins!")
+            reset_matrix()
+            printMatrix()
             break
         elif checkWinner(matrix, opposite) == True:
             print(f"{opposite} wins!")
+            reset_matrix()
+            printMatrix()
         else:
             if checkDraw(matrix):
                 print("It's a tie!")
+                reset_matrix()
                 break
 
 
